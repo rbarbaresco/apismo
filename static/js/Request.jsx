@@ -6,13 +6,14 @@ var $ = require('jquery');
 export default class Request extends React.Component {
   constructor(props) {
         super(props);
-        this.state = {paths: props.paths, 'path': props.path, 'method': props.method};
+        this.state = {paths: props.paths, 'path': props.path, 'method': props.method, 'host': props.host};
     }
 
   makeRequest () {
-  	console.log('paths', this.state.paths);
-  	console.log('path', this.state.path);
-  	console.log('method', this.state.method);
+    console.log('host', this.state.host);
+    $[this.state.method](this.state.host + this.state.path, (data) => {
+        console.log('incoming data', data);
+    });
   }  	
 
   render () {

@@ -19,33 +19,20 @@ export default class App extends React.Component {
         });
   }
 
-  selectedCity(event, {suggestion}) {
-      this.setState({
-          forecast: null
-      });
-      $.get('/forecast/' + suggestion['id'], (data) => {
-          this.setState({
-              forecast: JSON.parse(data)
-          });
-      });
-  }
-
-  request (paths, path, method) {
-  	console.log('paths', paths);
-  	console.log('path', path);
-  	console.log('method', method);
-  }  	
-
   render () {
       var apis = [];
-      console.log('look!', this.state);
       if (this.state.apis) {
-      	var paths = this.state.apis.paths
-      	for (var path in paths) {
-      		var methods = paths[path];
-      		for (var method in methods) {
-          	apis.push(<Request key={method+path} paths={paths} method={method} path={path}></Request>);
-      		}
+      	for (var index in this.state.apis) {
+      		var api = this.state.apis[index];
+      		console.log('look!api', api);
+	      	var paths = api.api.paths
+	      	for (var path in paths) {
+	      		var methods = paths[path];
+	      		for (var method in methods) {
+	          	apis.push(<Request key={method+path} host={api.host} paths={paths} method={method} path={path}></Request>);
+	      		}
+      	}
+
       	}
       }
 

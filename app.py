@@ -11,7 +11,11 @@ def index():
 
 @app.route("/apis")
 def apis():
-    return jsonify(requests.get("http://localhost:5000/apispec_1.json").json())
+    response = [{
+        'host': "http://localhost:5000",
+        'api': requests.get("http://localhost:5000/apispec_1.json").json()
+    }]
+    return jsonify(response)
 
 
 @app.route("/hello")
