@@ -1,5 +1,6 @@
 // App.jsx
 import React from "react";
+import Request from "./Request";
 
 var $ = require('jquery');
 
@@ -29,11 +30,23 @@ export default class App extends React.Component {
       });
   }
 
+  request (paths, path, method) {
+  	console.log('paths', paths);
+  	console.log('path', path);
+  	console.log('method', method);
+  }  	
+
   render () {
-      var apis = null;
+      var apis = [];
       console.log('look!', this.state);
       if (this.state.apis) {
-          apis = <p>{this.state.apis}</p>
+      	var paths = this.state.apis.paths
+      	for (var path in paths) {
+      		var methods = paths[path];
+      		for (var method in methods) {
+          	apis.push(<Request key={method+path} paths={paths} method={method} path={path}></Request>);
+      		}
+      	}
       }
 
       return (
