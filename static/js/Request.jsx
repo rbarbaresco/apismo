@@ -6,12 +6,28 @@ var $ = require('jquery');
 export default class Request extends React.Component {
   constructor(props) {
         super(props);
-        this.state = {paths: props.paths, 'path': props.path, 'method': props.method, 'host': props.host};
+        this.state = {
+          method: props.method,
+          host: props.host,
+          path: props.path,
+          specification: props.specification
+        };
     }
 
   makeRequest () {
-    console.log('host', this.state.host);
-    $[this.state.method](this.state.host + this.state.path, (data) => {
+    axios({
+      method: 'post',
+      url: '/makerequest',
+      headers: {'Content-Type': 'application/json'},
+      data: {
+        'host': this.state.host,
+        'path': this.state.path,
+        'method': this.state.method,
+        'payload': 'Need to build some beaultiful payload to show to the server',
+        'headers': [{'some': 'value'}],
+        'parameters': this.state.specification['parameters']
+      }
+    }).then( (data) => {
         console.log('incoming data', data);
     });
   }  	

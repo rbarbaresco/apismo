@@ -1,7 +1,12 @@
-from flask import Flask, render_template, jsonify
+# -*- coding: utf-8 -*-
+
+from flask import Flask, render_template, jsonify, request
 import requests
+from server.requester import Requester
 
 app = Flask(__name__, static_folder="static/dist", template_folder="static")
+
+requester = Requester()
 
 
 @app.route("/")
@@ -11,11 +16,17 @@ def index():
 
 @app.route("/apis")
 def apis():
-    response = [{
+    # if not cache:
+    cache = [{
         'host': "http://localhost:5000",
         'api': requests.get("http://localhost:5000/apispec_1.json").json()
     }]
-    return jsonify(response)
+    return jsonify(cache)
+
+
+@app.route("/makerequest", methods=["POST"])
+def make_request():
+    return jsonify(requester.request(request.data))
 
 
 @app.route("/hello")

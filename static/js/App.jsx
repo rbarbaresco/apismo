@@ -2,7 +2,7 @@
 import React from "react";
 import Request from "./Request";
 
-var $ = require('jquery');
+//var axios = require('axios');
 
 export default class App extends React.Component {
   constructor() {
@@ -12,7 +12,10 @@ export default class App extends React.Component {
           apis: null,
         };
 
-        $.get('/apis', (data) => {
+        axios({
+        	method: 'get',
+        	url: '/apis',
+        }).then( (data) => {
             this.setState({
                 apis: data
             });
@@ -24,12 +27,19 @@ export default class App extends React.Component {
       if (this.state.apis) {
       	for (var index in this.state.apis) {
       		var api = this.state.apis[index];
-      		console.log('look!api', api);
 	      	var paths = api.api.paths
 	      	for (var path in paths) {
 	      		var methods = paths[path];
 	      		for (var method in methods) {
-	          	apis.push(<Request key={method+path} host={api.host} paths={paths} method={method} path={path}></Request>);
+	          	apis.push(
+	          		<Request
+		          		key={method+path}
+		          		method={method}
+		          		host={api.host}
+		          		path={path}
+		          		specification={methods[method]}>
+	          		</Request>
+	          	);
 	      		}
       	}
 
