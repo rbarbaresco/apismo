@@ -2,7 +2,7 @@
 import React from "react";
 import Request from "./Request";
 
-//var axios = require('axios');
+var axios = require('axios');
 
 export default class App extends React.Component {
   constructor() {
@@ -17,7 +17,7 @@ export default class App extends React.Component {
         	url: '/apis',
         }).then( (data) => {
             this.setState({
-                apis: data
+                apis: data.data
             });
         });
   }

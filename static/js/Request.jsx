@@ -1,7 +1,7 @@
 // App.jsx
 import React from "react";
 
-var $ = require('jquery');
+var axios = require('axios');
 
 export default class Request extends React.Component {
   constructor(props) {

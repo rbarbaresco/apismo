@@ -26,7 +26,7 @@ def apis():
 
 @app.route("/makerequest", methods=["POST"])
 def make_request():
-    return jsonify(requester.request(request.data))
+    return jsonify(requester.request(request.get_json()))
 
 
 @app.route("/hello")
